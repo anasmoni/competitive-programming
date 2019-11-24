@@ -1,0 +1,59 @@
+// Don't place your source in a package
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+import java.math.*;
+import java.math.BigInteger;
+
+//https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1253  --------10312 - Expression Bracketing
+
+/*
+In this problem you will have to find in how many ways n letters can be bracketed so that the bracketing
+is non-binary bracketing. For example 4 letters have 11 possible bracketing:
+        
+        xxxx,(xx)xx, x(xx)x, xx(xx),(xxx)x, x(xxx),((xx)x)x,(x(xx))x,(xx)(xx), x((xx)x), x(x(xx))
+        
+Of these the first six bracketing are not binary. Given the number of letters you will have to find
+the total number of non-binary bracketing.
+
+*/
+
+class Main {
+	public static void main (String[] args) throws java.lang.Exception {
+	    
+	    Scanner in = new Scanner(System.in);
+	    
+	    BigInteger []fact = new BigInteger[55];         // factorial computing
+	    BigInteger []SCN = new BigInteger[55];          // super catalan number ,   SCN[n] = number of possible bracketing of n charecters
+	    BigInteger []CN = new BigInteger[55];           // catalan number ,   CN[n] = number of possible binary bracketing of n+1 charecters
+	    
+	    
+	    CN[0] = SCN[1] = SCN[2] = fact[1] = BigInteger.ONE;
+	    
+	    
+	    for(int i=2; i<=53; i++) fact[i] = fact[i-1].multiply(BigInteger.valueOf(i));
+	    
+	    for(int i=1; i<=26; i++) CN[i] = fact[2*i].divide( fact[i+1].multiply(fact[i]) );
+	    
+	    for(int i=3; i<=26; i++){
+	        
+	        BigInteger temp = BigInteger.valueOf(3*(2*i-3));
+	        temp = temp.multiply(SCN[i-1]);
+	        
+	        BigInteger sub = BigInteger.valueOf(i-3);
+	        sub = sub.multiply(SCN[i-2]);
+	        temp = temp.subtract(sub);
+	        
+	        SCN[i] = temp.divide(BigInteger.valueOf(i));
+	    }
+	    
+		while(in.hasNextInt()){
+		    
+		    int n = in.nextInt();
+		   
+		    System.out.println(SCN[n].subtract(CN[n-1]));
+		}
+		
+		
+	}
+}

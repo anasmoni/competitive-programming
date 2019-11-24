@@ -1,0 +1,84 @@
+// Don't place your source in a package
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+import java.math.*;
+import java.math.BigInteger;
+
+//https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=704 ------------763 - Fibinary Numbers
+
+//Zeckendrof's theorem :  positive int = sum of distinct fibonacci numbers (and no two consequtive number) 
+// details -> page - 204 book by Steven Halim & Falix Halim
+
+class Main {
+	public static void main (String[] args) throws java.lang.Exception {
+	    
+	    Scanner in = new Scanner(System.in);
+	    
+	    BigInteger []BI = new BigInteger[115];
+	    BI[1] = BigInteger.valueOf(1);
+	    BI[2] = BigInteger.valueOf(2);
+	    
+	    for(int i=3; i<111; i++)BI[i] = BI[i-1].add(BI[i-2]);
+	    
+	    boolean bal=false;
+		while(in.hasNext()){
+		    
+		    
+		    
+		    
+		       
+		    
+		      if(bal)System.out.println();
+		    
+		    bal = true;
+		
+		    String s = in.next();
+		    BigInteger sum = BigInteger.ZERO;
+		    int len = s.length();
+		
+		    
+		    for(int i=0; i<len; i++){
+		        if(s.charAt(i)=='0')continue;
+		        
+		        sum = sum.add(BI[len-i]);    
+		    }
+		    
+		    s = in.next();
+		    len = s.length();
+		    
+		    for(int i=0; i<len; i++){
+		        if(s.charAt(i)=='0')continue;
+		        
+		        sum = sum.add(BI[len-i]);    
+		    }
+		    boolean ne=false;
+		    
+		    if(sum.compareTo(BigInteger.ZERO)==0){
+		        System.out.println(0);
+		        continue;
+		    }
+		    
+		    for(int i=110 ; i>=1; i--){
+		        if(sum == BigInteger.ZERO){
+		            System.out.print("0");
+		            continue;
+		        }
+		        
+		        if(sum.compareTo(BI[i]) == -1 ){
+		            if(ne)System.out.print(0);
+		            continue;
+		        }
+		        System.out.print(1);
+		        ne = true;
+		        
+		        sum = sum.subtract(BI[i]);
+		    }
+		    bal = true;
+		    System.out.println();
+		    
+		}
+		
+		
+	}
+}

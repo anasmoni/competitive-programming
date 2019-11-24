@@ -1,0 +1,6 @@
+DP ARRAY 
+
+https://www.hackerrank.com/challenges/sherlock-and-cost
+
+DP- cutting rod
+http://www.geeksforgeeks.org/dynamic-programming-set-13-cutting-a-rod/

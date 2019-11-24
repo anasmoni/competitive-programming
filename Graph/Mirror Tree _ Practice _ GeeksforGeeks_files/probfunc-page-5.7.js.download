@@ -1,0 +1,553 @@
+var editor = ace.edit("editor");
+var lang,solcpp,solc,soljava,solpython,solpython3,sendsol,initialCode;
+var defaultC="",defaultCPP="",defaultJava="",defaultPython="",defaultPython3="";
+
+// below two varibles will be prepended to default code of languges(prependTextOther for c/c++/java and prependTextPython for python) to indicate user that this is a function problem.
+var prependTextPython = "'''"+"Please note that it\'s Function problem i.e.\nyou need to write your solution in the form Function(s) only.\nDriver Code to call/invoke your function would be added by GfG\'s Online Judge."+"'''\n\n\n";
+var prependTextOther = "/*\nPlease note that it\'s Function problem i.e.\nyou need to write your solution in the form Function(s) only.\nDriver Code to call/invoke your function would be added by GfG\'s Online Judge.*/\n\n\n";
+
+
+var isLsAvailable = true;
+var themes = {"Theme Light":"ace/theme/chrome","Dark":"ace/theme/vibrant_ink","Monokai":"ace/theme/monokai","GeeksforGeeks":"ace/theme/gfg"};
+var storedCode = false;
+
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+    }
+  }
+}
+
+function lsTest(){
+    var test = 'test';
+    try {
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      isLsAvailable = true;
+    } catch(e) {
+        if (e.name === 'QuotaExceededError') {
+                localStorage.clear();
+                isLsAvailable = true;
+        }
+        else { isLsAvailable =  false; }
+    }
+}
+
+
+$(document).ready(function(){
+
+        //auto and live completion 
+        ace.require("ace/ext/language_tools");
+/*        editor.setOptions({
+                enableBasicAutocompletion: true,
+                enableSnippets: true,
+                enableLiveAutocompletion: true
+        });
+        //end
+*/
+        editor.$blockScrolling = Infinity;
+        //disables vertical line in ace editor
+        editor.setOption("showPrintMargin", false);
+        var previousTheme = localStorage.getItem('theme');
+        if(previousTheme == "null")
+                previousTheme = "Theme Light";
+        editor.setTheme(themes[previousTheme]);
+
+        $('.themes option:contains('+previousTheme+')').prop('selected', true);  //Select the already selected option
+
+ function chauhan(){
+
+        $.ajax({
+            type:"GET",
+            url:"/ajax/getsolution.php",
+            data:{pid:pid},
+            success:function(data){
+				var ob = $.parseJSON(data);
+				if(ob[0]!=null)
+                                	defaultCPP=prependTextOther+ob[0].replace(/(?:\\[rn]|[\r\n]+)+/g, "\n");
+				if(ob[1]!=null)
+                                	solcpp=ob[1];
+				if(ob[2]!=null)
+	                                defaultC=prependTextOther+ob[2].replace(/(?:\\[rn]|[\r\n]+)+/g, "\n");
+				if(ob[3]!=null)
+                                	solc=ob[3];
+				if(ob[4]!=null)
+	                                defaultJava=prependTextOther+ob[4].replace(/(?:\\[rn]|[\r\n]+)+/g, "\n");
+				if(ob[5]!=null)
+                                	soljava=ob[5];
+				if(ob[6]!=null)
+	                                defaultPython=prependTextPython+ob[6].replace(/(?:\\[rn]|[\r\n]+)+/g, "\n");
+				if(ob[7]!=null)
+                                	solpython=ob[7];
+				if(ob[8]!=null)
+                                	defaultPython3=prependTextPython+ob[8].replace(/(?:\\[rn]|[\r\n]+)+/g, "\n");
+				if(ob[9]!=null)
+                                	solpython3=ob[9];
+
+				if(storedCode){
+					$('#'+language).click();
+				}
+                                else if(defaultCPP!="" && solcpp!="")
+                                  {
+                                        $('#cpp').click();
+                                  }
+                                else if(defaultJava!="" && soljava!="")
+                                  {
+                                        $('#java').click();
+                                  }
+                                 else if(defaultPython!="" && solpython!="")
+                                  {
+                                        $('#python').click();
+                                  }
+                                  else if( defaultC!="" && solc!="")
+                                  {
+                                        $('#c').click();
+                                  }
+				  else if( defaultPython3!="" && solpython3!="")
+                                  {
+                                        $('#python3').click();
+                                  }
+
+
+				
+            }
+        });
+}
+
+
+
+      	
+	$(".lang").click( function() {
+		$(".lang").css( "background-color", "#46B96B" );
+		$(this).css( "background-color", "green" );
+		lang = $(this).attr('id');
+	});
+
+	$("#resetEditor").click( function() {
+                editor.getSession().setValue('');
+                $('#'+lang).click();
+        });
+
+	$('#c').on('click',function() {
+		editor.getSession().setMode("ace/mode/c_cpp");
+		var text=editor.getSession().getValue();
+		if( text === '' || text == defaultJava || text == defaultCPP || text == defaultC || text == defaultPython || text== defaultPython3 ) {
+				editor.getSession().setValue(defaultC);
+		}
+		
+	});
+	$('#cpp').on('click',function() {
+		editor.getSession().setMode("ace/mode/c_cpp");
+		var text=editor.getSession().getValue();
+		if( text === '' || text == defaultJava || text == defaultCPP || text == defaultC || text == defaultPython || text== defaultPython3) {
+				editor.getSession().setValue(defaultCPP);
+		}
+	});
+
+
+	$('#java').on('click',function(){
+		editor.getSession().setMode("ace/mode/java");
+		var text=editor.getSession().getValue();
+		if( text === '' || text == defaultJava || text == defaultCPP || text == defaultC || text == defaultPython|| text== defaultPython3 ) {
+				editor.getSession().setValue(defaultJava);
+		}
+	});
+	$('#python').on('click',function(){
+		editor.getSession().setMode("ace/mode/python");
+		var text=editor.getSession().getValue();
+		if( text === '' || text == defaultJava || text == defaultCPP || text == defaultC || text == defaultPython|| text== defaultPython3 ) {
+				editor.getSession().setValue(defaultPython);
+		}
+	});
+	$('#python3').on('click',function(){
+		editor.getSession().setMode("ace/mode/python");
+		var text=editor.getSession().getValue();
+		if( text === '' || text == defaultJava || text == defaultCPP || text == defaultC || text == defaultPython || text== defaultPython3) {
+				editor.getSession().setValue(defaultPython3);
+		}
+	});
+
+	if( editor == null ) {
+		return;
+	}
+	editor.focus();
+	$(window).unload( function() {
+		if( isLsAvailable == true ){
+             //   var pid = getQueryVariable("pid");
+                var dataObject = {};
+                var oldData = JSON.parse( localStorage.getItem( 'data' ) );
+                var tempLang = lang;
+                if( oldData !== null ){
+                        for (var key in oldData) {
+                                var code = oldData[key].code;
+                                lang = oldData[key].lang;
+                                dataObject[key] = { code , lang };
+                        }
+                }
+                var code = editor.session.getValue();
+                lang = tempLang;
+                 var testInput = '';
+
+                if( document.getElementById("expectedArea").elements[0].value != '')
+                    testInput = document.getElementById("expectedArea").elements[0].value;
+                else if (document.getElementById("testarea").elements[0].value != '')
+                    testInput = document.getElementById("testarea").elements[0].value;
+
+                dataObject[pid]={code,lang,testInput};
+                if(!(code === '' || code == defaultJava || code == defaultCPP || code == defaultC || code == defaultPython || code == defaultPython3 ))
+                        localStorage.setItem( 'data', JSON.stringify(dataObject) );
+
+                localStorage.setItem( 'theme', previousTheme );
+          } else {
+                   console.log("LocalStorage not available");
+          }
+	});
+
+	var norOps = {
+		minLines: 25,
+		maxLines: null,
+		fontSize: "12pt"
+	};
+
+
+	editor.setOptions( norOps );
+
+
+	function toggleFullScreen() {
+		var elem = document.getElementById("editor");
+		if (elem.requestFullscreen) {
+		  elem.requestFullscreen();
+		} else if (elem.msRequestFullscreen) {
+		  elem.msRequestFullscreen();
+		} else if (elem.mozRequestFullScreen) {
+		  elem.mozRequestFullScreen();
+		} else if (elem.webkitRequestFullscreen) {
+		  elem.webkitRequestFullscreen();
+		}
+
+	}
+
+	$('#save').on('click',function(){
+		$.ajax({
+           	 type:"GET",
+            	 url:"/ajax/savesolution.php",
+            	 data:{pid:pid ,userid:userid,code:editor.getSession().getValue(),lang:lang},
+            	 success:function(data){
+	//		alert(data);
+		   	 }
+		});
+   	});
+		
+		
+
+	$( "#full" ).click( function() {
+		toggleFullScreen();
+	});
+
+
+	  $(".themeLight").parent().change(function(oEvent){
+                var selectedValue = $(".themeLight").parent().val();
+                previousTheme = selectedValue;
+                switch(selectedValue){
+                case "Theme Light":
+                editor.setTheme("ace/theme/chrome");
+                break;
+                case "Dark":
+                editor.setTheme("ace/theme/vibrant_ink");
+                break;
+                case "Monokai":
+                editor.setTheme("ace/theme/monokai");
+                break;
+                case "GeeksforGeeks":
+                editor.setTheme("ace/theme/gfg");
+                break;
+                }
+        });
+
+        var text = editor.session.getValue();
+        var data = JSON.parse(localStorage.getItem( 'data' ));
+
+        if( data !=null && data[pid] != null ){
+                storedCode = data[pid].code;
+
+        }
+        if( storedCode ) {
+                document.getElementById("testarea").elements[0].value = data[pid] .testInput;
+                document.getElementById("expectedArea").elements[0].value = data[pid] .testInput;
+
+                 if( text === '' || text == defaultJava || text == defaultCPP || text == defaultC || text == defaultPython || text== defaultPython3 || isDefaultCode == '1' ) {
+                        editor.session.setValue( storedCode );
+                        language = data[pid].lang;
+                        $('#'+language).click();
+                }
+        }
+	
+	chauhan();
+
+
+});
+
+//TLE 11, RunTime Error 12 , Compiler Error 13
+	var erroneousLine;
+
+	$(document).ready(function () {
+
+			function unhighlightError(){
+				var i
+				for(i=0; i < 1000 ;i++){
+				  editor.getSession().removeMarker(i);
+	  			}
+
+	}
+
+	function highlightError(lineNumber) {
+	  
+	  var Range = ace.require("ace/range").Range
+	  erroneousLine = editor.session.addMarker(new Range(lineNumber, 0, lineNumber, 144), "errorHighlight", "fullLine");
+	}
+
+	function highlightEditorErrors(cmpErrorText) {
+
+			var indices = [];
+						var pattern = "error";
+						var strLenght=cmpErrorText.length;
+						var j;	
+						for(var i=0; i<strLenght-5;i++) {	
+							for( j=0;j<5;j++){
+								if(cmpErrorText[i+j] != pattern[j])
+									break;
+							}
+
+							if(j==5){
+								var colon=0,k=i-3;
+								while(k >= 0){
+									if(cmpErrorText[k] == ':'){
+										k=k-1;
+										break;
+									}
+										
+									k=k-1;
+								}
+
+								var len=0;
+								while(k >= 0){
+									if(cmpErrorText[k] < '0' || cmpErrorText[k] > '9'){
+										break;
+									}
+
+									len=len+1;
+									k=k-1;
+								}
+								var num = 0;
+								for(var x=k+1; x<(k+1+len) ;x++){
+									num=num*10 + cmpErrorText.charCodeAt(x) -48;
+								}
+								//$( ".out pre" ).append('\nnum '+cmpErrorText.charCodeAt(x));
+								indices.push(num);	
+							}
+								
+						}
+						
+						for(var j=0 ; j<indices.length ; j++){
+							highlightError(indices[j] - 1);
+							//$( ".out pre" ).append('\nindeic '+indices[[j]]);
+						}
+		}
+		
+/*		function checklang(lang)//is to check which language function we have to merge the solution 
+		{
+			if(lang == 'cpp')
+				sendsol=solcpp;
+			else if(lang == 'java')
+			    sendsol=soljava;
+			else if(lang == 'python')
+			    sendsol=solpython;
+			else if(lang == 'python3')
+			    sendsol=solpython3;
+			else
+			    sendsol=solc;
+		} */
+		 function checklang(lang)//is to check which language function we have to merge the solution 
+                {
+                        if(lang == 'cpp')
+				{
+                                sendsol=solcpp.concat(editor.getSession().getValue());
+				initialCode =  solcpp;
+				}
+                        else if(lang == 'java')
+				{
+                                 sendsol=soljava.concat(editor.getSession().getValue());
+                                 initialCode = soljava;
+ 				}
+                        else if(lang == 'python')
+                                {
+                                 sendsol=editor.getSession().getValue()+"\n"+solpython;
+                                 initialCode = solpython;
+				}
+                        else if(lang == 'python3')
+				{
+                                 sendsol=editor.getSession().getValue()+"\n"+solpython3;
+				 initialCode = solpython3;
+				}
+                        else
+				{
+                                 sendsol=solc.concat(editor.getSession().getValue());
+                                 initialCode = solc;
+				}
+                }
+
+		$("#run").click(function() {
+			checklang(lang);
+			$(this).attr( "disabled", "disabled" );
+			$( ".out pre" ).text( 'Evaluating...' );
+			var isCorrect=0;
+			$.ajax({
+				type: "POST",
+				url: '/ajax/solutionChecking.php',
+				data: { lang: lang, code: editor.getSession().getValue(), pid:  pid, solution: initialCode },
+				success: function( data ) {
+						var continuousSubmissions = data.indexOf("Continuous Submissions:");
+						if( continuousSubmissions != -1) {
+							$(".out pre").text('');
+                                                        $(".out pre").append('<div class="alert alert-warning">'+data+'</div');
+						}
+						else {
+							var idStartIndex = data.lastIndexOf("<id>");
+							if(idStartIndex !=-1) {
+								var message = data.substr(0,idStartIndex); 
+								var id = data.substr(idStartIndex+4);
+							}
+							else {
+								var message = data;
+							}
+							unhighlightError();
+							$(".out pre").text(' ');
+						 	$( ".out pre" ).append( message );
+							var pattern = /Correct Answer/;
+							var result = pattern.test( message );
+							if(!result ) {
+						   		$( ".out pre" ).append('<input class="btn btn-primary Help" value="Need Help ?" style="width:14%"></input>');
+							}
+
+							$('.Help').click(function() {
+	                                           		this.disabled=true;
+								this.disabled=true;
+                	                                        $(".out pre").append('<br><ul><li>Generate URL of your code using <a href="http://ide.geeksforgeeks.org">ide.geeksforgeeks.org</a> and share in comments.</li>'+"<h4>OR</h4><li>Share this link in comments:<a href='/viewSol.php?subId="+id+"&pid="+pid+"&user="+currentUser+"'>Link</a></li>"+"<h4>OR</h4><li>View Accepted  <a href='/problem_submissions.php?pid="+pid+"'>Solutions.</a></li>");
+							});
+					}
+				},
+				error: function(jqXHR, exception, errorThrown) {
+					$( ".out pre" ).text( 'Error / Run TimeError.\n Try again' );
+
+					$( ".err" ).show().delay(5000).slideUp(200, function() {
+						$(this).hide();
+					});
+				},
+				complete: function() {
+					$("#run").removeAttr( "disabled" );
+				}
+			});
+			return false;
+		});
+		//added in testRunfunc php 
+		$("#test").click(function() {
+			$('#expectedArea').hide();
+            if(document.getElementById("expectedArea").elements[0].value != '')
+                document.getElementById("testarea").elements[0].value = document.getElementById("expectedArea").elements[0].value
+			$('#testarea').show();
+		});
+		$("#testRun").click(function() {
+			checklang(lang);
+			$(this).attr( "disabled", "disabled" );
+			var input=document.getElementById("testarea").elements[0].value;
+			
+			$( ".out pre" ).text( 'Evaluating....' );
+
+			$.ajax({
+				type: "POST",
+				url: '/ajax/testRun.php',
+				data: { lang: lang, code: sendsol, input: input, pid:pid  },
+				dataType: "json",
+				success: function( data ) {
+					unhighlightError();
+					if( data.rntError != "" && data.rntError != null ) {
+					
+						$( ".out pre" ).text( 'Run Time Error\n'+data.rntError );
+					}
+					else if( data.cmpError != "" && data.cmpError != null  ) {
+						$( ".out pre" ).text( 'Compilation Error... \n'+data.cmpError );
+						
+						/* Highliting editor where compilation error */
+					
+						highlightEditorErrors(data.cmpError);
+
+						//var cmpErrorText = data.cmpError;
+				
+						$( ".out pre" ).append('\n'+'<img style="position: relative; top: 2px; left: 5px; height: 27px; margin-right:10px;" src="' + window.urlCdn + '/images/cmp.gif" border="0" title="Compilation Error" alt="Compilation Error">');
+					}
+					else if( data.output != "" && data.output != null ) {
+						$( ".out pre" ).text( data.output );
+					} else {
+						$( ".out pre" ).text( 'Time Limit Exceeded (ide)' );
+						$( ".out pre" ).append('\n'+'<img style="position: relative; top: 2px; left: 5px; height: 27px; margin-right:10px;" src="' + window.urlCdn + '/images/tle.png" border="0" title="Time Limit Exceeded" alt="Time Limit Exceeded">');
+					}
+				},
+				error: function(jqXHR, exception, errorThrown) {
+					$( ".out pre" ).text( 'Error / Run TimeError.\n Try again' );
+
+					$( ".err" ).show().delay(5000).slideUp(200, function() {
+						$(this).hide();
+					});
+				},
+				complete: function() {
+					$("#testRun").removeAttr( "disabled" );
+				}
+			});
+			return false;
+		});
+		$("#expectedOutcome").click(function() {
+			$('#testarea').hide();
+            if(document.getElementById("testarea").elements[0].value != '')
+                document.getElementById("expectedArea").elements[0].value = document.getElementById("testarea").elements[0].value;                
+			$('#expectedArea').show();
+		});
+		$("#expectedRun").click(function() {
+			$(this).attr( "disabled", "disabled" );
+			var input=document.getElementById("expectedArea").elements[0].value;
+			$( ".out pre" ).text( 'Evaluating.....' );
+
+			$.ajax({
+				type: "POST",
+				url: '/ajax/expectedOutcome.php',
+				data: { input:  input, pid: pid  },
+				dataType: "json",
+				success: function( data ) {
+
+					if( data.rntError != "" && data.rntError != null ) {
+						$( ".out pre" ).text( 'Run Time Error\n'+data.rntError );
+					}
+					else if( data.cmpError != "" && data.cmpError != null  ) {
+						$( ".out pre" ).text( 'Compilation Error \n'+data.cmpError );
+					}
+					else if( data.output != "" && data.output != null ) {
+						$( ".out pre" ).text( data.output );
+					} else {
+						$( ".out pre" ).text( 'Time Limit Exceeded (ide) / Wrong Inputs' );
+					}
+				},
+				error: function(jqXHR, exception, errorThrown) {
+					$( ".err" ).show().delay(5000).slideUp(200, function() {
+						$(this).hide();
+					});
+				},
+				complete: function() {
+					$("#expectedRun").removeAttr( "disabled" );
+				}
+			});
+			return false;
+		});
+	});
