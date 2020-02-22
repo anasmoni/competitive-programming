@@ -48,7 +48,12 @@ bool check(int N,int pos)
 
 ///priority_queue< int, vector< int >, greater< int > > minHeap;
 
-///https://codeforces.com/contest/877/problem/E
+/**
+given array a
+proccess 2 type of queries
+1 . given (l,r) update a[l] += 1 , a[l+1] += 2 , a[l+2] += 3  and so on
+2.  print sum of range (l,r)
+*/
 
 #define N 200005
 
