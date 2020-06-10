@@ -20,5 +20,22 @@ SWE prep DOC : https://docs.google.com/document/d/1hxnrh7nm24IqtFXsSQqwv4Arx4cxl
 
 
 Some good problems : 
+-------------------------------
 
-https://leetcode.com/articles/find-the-duplicate-number/
+see solution for O(n) time and O(1) space (floyd's cycle finding in link list): https://leetcode.com/articles/find-the-duplicate-number/
+
+asked in google, yahoo : https://www.interviewbit.com/problems/interleaving-strings/
+
+see solution from here : https://www.geeksforgeeks.org/find-if-a-string-is-interleaved-of-two-other-strings-dp-33/
+
+https://www.interviewbit.com/problems/repeat-and-missing-number-array/
+
+gray code (see solution approach) : https://www.interviewbit.com/problems/gray-code
+
+see Follow up 2 : https://leetcode.com/articles/game-of-life/
+
+cute one (^_^) : https://leetcode.com/explore/interview/card/top-interview-questions-hard/116/array-and-strings/832/
+
+see O(n) solution : https://leetcode.com/explore/interview/card/top-interview-questions-hard/121/dynamic-programming/862/discuss/673526/C++-Memoization-Solution-Relatively-easier-to-understand(O(n)-space-O(n)-time)
+
+see O(1) space solution (peak valley ) : https://leetcode.com/articles/best-time-to-buy-and-sell-stock-ii/
