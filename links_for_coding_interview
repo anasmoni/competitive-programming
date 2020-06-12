@@ -18,6 +18,7 @@ career cup : google interview question : https://www.careercup.com/page?pid=goog
 
 SWE prep DOC : https://docs.google.com/document/d/1hxnrh7nm24IqtFXsSQqwv4Arx4cxlD9t29cfpKQRRx8/edit
 
+partial sort vs nth element : https://stackoverflow.com/questions/31195674/complexity-of-partial-sort-vs-nth-element
 
 Some good problems : 
 -------------------------------
@@ -25,6 +26,23 @@ Some good problems :
 see solution for O(n) time and O(1) space (floyd's cycle finding in link list): https://leetcode.com/articles/find-the-duplicate-number/
 
 asked in google, yahoo : https://www.interviewbit.com/problems/interleaving-strings/
+
+see O(n+m) solution : https://leetcode.com/explore/interview/card/top-interview-questions-medium/110/sorting-and-searching/806/
+
+see backtracking complexity : https://leetcode.com/articles/jump-game/
+
+Nice O(1) space solution using hare,tortoise floyd algo : https://leetcode.com/explore/interview/card/top-interview-questions-medium/113/math/815/
+
+https://leetcode.com/explore/interview/card/top-interview-questions-medium/113/math/818/
+
+https://leetcode.com/explore/interview/card/top-interview-questions-medium/113/math/820/
+
+see bitset solution : 
+
+
+
+
+
 
 see solution from here : https://www.geeksforgeeks.org/find-if-a-string-is-interleaved-of-two-other-strings-dp-33/
 
@@ -49,3 +67,24 @@ see bit manipulation trick : https://leetcode.com/articles/number-1-bits/
 see O(1) solution : https://leetcode.com/articles/reverse-bits/
 
 nice bit manupulation trick : https://leetcode.com/articles/missing-number/
+
+see counting approach : https://leetcode.com/articles/group-anagrams/
+
+see manacher's algo + expand from center appraoch + reverse hasing (my ide) : https://leetcode.com/articles/longest-palindromic-substring/
+
+https://leetcode.com/explore/interview/card/top-interview-questions-medium/103/array-and-strings/781/
+
+see complexity : https://leetcode.com/articles/generate-parentheses/
+
+see follow up : https://leetcode.com/explore/interview/card/top-interview-questions-medium/110/sorting-and-searching/798/
+
+just see quickselect algo : https://leetcode.com/articles/top-k-frequent-elements/
+
+why O(log(n)) works : https://leetcode.com/articles/find-peak-element/   (won't work without a[i]!=a[i+1] condition)
+                          https://youtu.be/HtSuA80QTyo
+
+see bitset solution : https://leetcode.com/explore/interview/card/top-interview-questions-medium/114/others/822/
+
+Boyer moor voting algorithm : https://leetcode.com/articles/majority-element/
+
+
