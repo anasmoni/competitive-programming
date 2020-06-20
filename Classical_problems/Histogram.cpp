@@ -2,7 +2,7 @@
 using namespace std;
 
 int a[30007];
-
+// idea : what if array is non decreasing ??
 int solve(int n)
 {
     int ans=0,tem;
@@ -67,11 +67,8 @@ int calc(stack<int>&stk, vector<int>&v , int i){
     }
     
     int MaxRect(vector<int>v){
-        
-        if(v.size() == 0) return 0;
-        
+    
         stack<int>stk;
-        
         int i=0, area = 0;
         
         while(i<v.size()){
