@@ -53,3 +53,39 @@ int main()
 1
 9
 2 2 7 7 7 2 2 4 2*/
+
+/**
+// cleaner one 
+
+int calc(stack<int>&stk, vector<int>&v , int i){
+        
+        int tp = stk.top();
+        stk.pop();
+        int now = v[tp] * (stk.size()>0 ? i-stk.top()-1 : i);
+
+        return now;
+    }
+    
+    int MaxRect(vector<int>v){
+        
+        if(v.size() == 0) return 0;
+        
+        stack<int>stk;
+        
+        int i=0, area = 0;
+        
+        while(i<v.size()){
+            
+            if(stk.size() == 0 || v[stk.top()]<=v[i]) stk.push(i++);    
+            else{                
+                area = max(area, calc(stk,v,i));
+            }
+        }
+        
+        while(stk.size()){
+            area = max(area, calc(stk,v,i)); 
+        }
+       
+        return area;
+    }
+**/
