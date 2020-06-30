@@ -1,0 +1,33 @@
+void RadixSort(vector<int>&nums){
+        
+        if(nums.size()<=1) return ;
+        
+        int  mx = 0 , n = nums.size();
+        
+        for(int i : nums) mx = max(mx, i);
+        
+        vector<int>temp(n);
+        
+        for( long long e = 1; mx/e > 0 ; e *= 10){
+            
+            vector<int>cnt(10,0);    
+            
+            for(int i : nums){
+                cnt[Digit(i,e)]++;
+            }
+            for(int i=1; i<=9; i++) cnt[i] += cnt[i-1];
+            // now cnt[i] has position of digit i
+            
+            // cnt[i] has position from backgword
+            // nums get forted digit by digit every time
+            // try [613,643] with forward approach
+            for(int i=n-1; i>=0; i--){
+                int d = Digit(nums[i],e);
+                temp[cnt[d]-1] = nums[i];
+                cnt[d]--;
+            }
+            nums = temp;
+        }
+        
+        
+    }
