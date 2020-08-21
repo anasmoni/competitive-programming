@@ -33,6 +33,9 @@ see O(n+m) solution : https://leetcode.com/explore/interview/card/top-interview-
 
 see backtracking complexity : https://leetcode.com/articles/jump-game/
 
+https://leetcode.com/problems/fruit-into-baskets/submissions/
+
+
 Nice O(1) space solution using hare,tortoise floyd algo : https://leetcode.com/explore/interview/card/top-interview-questions-medium/113/math/815/
 
 https://leetcode.com/explore/interview/card/top-interview-questions-medium/113/math/818/
@@ -132,3 +135,5 @@ https://leetcode.com/problems/multiply-strings/submissions/
 https://leetcode.com/problems/find-all-duplicates-in-an-array/submissions/
 
 https://leetcode.com/problems/friend-circles/submissions/
+
+https://leetcode.com/problems/3sum-closest/solution/
