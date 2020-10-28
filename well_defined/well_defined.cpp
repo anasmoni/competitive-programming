@@ -89,3 +89,15 @@ int main()
 ///sin and cos expect input in radians not degrees. so use , sin(degrees * pi / 180)
 ///using bs = bitset<MX>; // how many distinct number can be form?
 ///sort(atoz(v), [](const data x, const data y){return (x.a==y.a?x.b>y.b : x.a<y.a);});
+/*
+stoi() , to_string()
+
+// split a string using delimeter 
+
+string s = "a,b,c,d,s";
+stringstream ss(s);
+string temp;
+while(getline(ss,temp,',')){
+    cout<<temp<<endl;
+}
+*/
