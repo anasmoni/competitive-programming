@@ -246,3 +246,7 @@ see O(1) space solution : https://leetcode.com/problems/copy-list-with-random-po
 
 See O(1) extra space solution : https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree
 
+Nice problem using right hand rule : https://leetcode.com/problems/robot-room-cleaner/discuss/153530/DFS-Logical-Thinking
+
+see how dfs path is used to  hash : https://leetcode.com/problems/number-of-distinct-islands/solution/
+
