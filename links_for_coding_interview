@@ -250,3 +250,4 @@ Nice problem using right hand rule : https://leetcode.com/problems/robot-room-cl
 
 see how dfs path is used to  hash : https://leetcode.com/problems/number-of-distinct-islands/solution/
 
+see O(1) space two pointer solution : https://leetcode.com/problems/trapping-rain-water
