@@ -264,5 +264,6 @@ see visualization video : https://www.youtube.com/watch?v=cJayBq38VYw
 expression + parsing ...see my code submited from  batch_15 account : https://leetcode.com/problems/number-of-atoms
 
 Nice one + important  : https://leetcode.com/problems/optimal-account-balancing/
- see solution idea from here : https://leetcode.com/problems/optimal-account-balancing/discuss/219187/Short-O(N-*-2N)-DP-solution-with-detailed-explanation-and-complexity-analysis
+ see solution idea from here and check out the tricky way to get submask: https://leetcode.com/problems/optimal-account-balancing/discuss/219187/Short-O(N-*-2N)-DP-solution-with-detailed-explanation-and-complexity-analysis
+ 
 
