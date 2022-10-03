@@ -97,6 +97,59 @@ typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics
 
 */
 
+/*
+
+    class minHeapComp{
+        public:
+            bool operator() (int a ,  int b){
+                return abs(a)>abs(b);
+            }
+    };
+    class maxHeapComp{
+        public:
+            bool operator() (int a ,  int b){
+                return abs(a)<abs(b);
+            }
+    };
+
+    priority_queue<int, vector<int>, minHeapComp> p;
+    priority_queue<int, vector<int>, maxHeapComp> pq;
+    
+    vector<int> v = {3,4,-12,5,6,-1};
+    for(int i : v){
+        p.push(i);
+        pq.push(i);
+    }
+    while(p.size()){
+        cout<<p.top()<<" "<<pq.top()<<endl;
+        p.pop();
+        pq.pop();
+    }
+   -------------------output --------------------------
+   -1 -12
+    3 6
+    4 5
+    5 4
+    6 3
+    -12 -1
+    
+    
+    vector<int> v = {3,4,-12,5,6,-1};
+    sort(v.begin(), v.end(), minHeapComp());
+    for(int i : v) cout<<i<<" ";
+    sort(v.begin(), v.end(), maxHeapComp());
+    cout<<endl;
+    for(int i : v) cout<<i<<" ";
+    
+    -12 6 5 4 3 -1 
+    -1 3 4 5 6 -12 
+    
+    
+    ----------------------------  think them horizontally -------------------------- > means greater to small, < means small to greater from left
+
+*/
+
+
 /**
 
 int month[]={-1,31,28,31,30,31,30,31,31,30,31,30,31};  //Not Leap Year
