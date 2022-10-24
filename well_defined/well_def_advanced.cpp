@@ -101,7 +101,7 @@ typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics
 
     class minHeapComp{
         public:
-            bool operator() (int a ,  int b){
+            bool operator() (int a ,  int b){ // minheap asking if a is greater then b, but sort function of vector asking if a is less then b
                 return abs(a)>abs(b);
             }
     };
@@ -113,7 +113,7 @@ typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics
     };
 
     priority_queue<int, vector<int>, minHeapComp> p;
-    priority_queue<int, vector<int>, maxHeapComp> pq;
+    priority_queue<int, vector<int>, maxHeapComp> pq; // maxHeap using meanHeap
     
     vector<int> v = {3,4,-12,5,6,-1};
     for(int i : v){
@@ -144,8 +144,6 @@ typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics
     -12 6 5 4 3 -1 
     -1 3 4 5 6 -12 
     
-    
-    ----------------------------  think them horizontally -------------------------- > means greater to small, < means small to greater from left
 
 */
 
