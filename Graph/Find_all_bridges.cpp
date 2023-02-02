@@ -1,5 +1,7 @@
 class Solution {
      
+     // low[u] -- >> min disc time of vertex that can be reached from subtree rooted at u
+     
     vector<int>g[100005];
     vector<int>low, disc, parent;
     vector<vector<int> >res;
